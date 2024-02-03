@@ -2,11 +2,20 @@
   "name": "aha-pre-interview-fullstack",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node src/index.ts",
+    "clean": "rm -Rf ./dist",
+    "build": "npm run clean; tsc",
+    "prepublish": "npm run build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "ignore": ["dist/*"],
+  "ext": "js,ts"
 }

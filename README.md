@@ -1,27 +1,34 @@
 # Preparation
 
-## Install MySQL locally
+## Install MySQL via Docker
 
-- To start this project correctly, you need to install MySQL in your local computer.
+- To start this project correctly, you need to install MySQL via using the command below:
 
-### Install via Homebrew
+```
+docker run -d --restart always \
+  --name mysql \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=mydb \
+  -e MYSQL_USER=app \
+  -e MYSQL_PASSWORD=apppass \
+  -v $(pwd)/docker-data/mysql:/var/lib/mysql \
+  -p 3306:3306 \
+  mysql:8.3.0
+```
 
-`brew install mysql mycli`
+You can start/stop after initialized the container
 
-After installed, you can execute command to start mysql, check status or stop it. 
+`docker start mysql`
+`docker stop mysql`
 
-`brew services list`
-`brew services start mysql`
-`brew services stop mysql`
+### Install mycli via Homebrew
+
+`brew install mycli`
+
+After installed, you can execute command to start mysql, check status or stop it.
 
 After started MySQL, you can manipulate it by using mycli
 
 `mycli -u root -h localhost`
 
-### Uninstall MySQL
-
-`brew uninstall mysql`
-
-Some local data won't be deleted by Homebrew. It needs to execute additional command:
-
-`sudo rm -rf /usr/local/var/mysql`
+Password is "root" that been set above step

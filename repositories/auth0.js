@@ -1,6 +1,7 @@
 const express = require("express");
 const {auth, requiresAuth} = require("express-openid-connect");
 const {join} = require("path");
+const authConfig = require("../secret/auth_config.json")
 
 const auth0 = express();
 
@@ -9,7 +10,7 @@ const config = {
     auth0Logout: true,
     secret: 'a long, randomly-generated string stored in env',
     baseURL: 'http://localhost:3000',
-    clientID: 'F536bnAdrHQ2IfxpXXDhalM67sx1LdoD',
+    clientID: authConfig.clientId,
     issuerBaseURL: 'https://dev-btzqcfy7fq2uv7xm.jp.auth0.com',
 };
 

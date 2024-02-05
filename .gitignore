@@ -2,6 +2,6 @@
 .vscode
 node_modules/
 .idea/
-auth_config.json
+secret/
 docker-data/
 dist/

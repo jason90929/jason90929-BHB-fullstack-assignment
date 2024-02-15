@@ -29,6 +29,7 @@ users.get("/users", async (req, res, next) => {
     }
     next()
 })
+
 users.get("/users/:id", async (req, res, next) => {
     if (req.headers.authorization !== '') {
         try {
@@ -52,10 +53,11 @@ users.get("/users/:id", async (req, res, next) => {
 
 users.patch("/users/:id", jsonParser, async (req, res, next) => {
     if (req.headers.authorization !== '') {
-        console.log("req", req.body)
         try {
             const resp = await axios.patch(`${authConfig.audience}users/${req.params.id}`, {
-                    name: req.body.name
+                    name: req.body.name,
+                    password: req.body.password,
+                    // Add additional fields if needed
                 },
                 {
                     headers: {

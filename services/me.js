@@ -5,7 +5,6 @@ const {defaultHeaders} = require("../constants");
 const {jsonParser, requiresAuth, adminLogin} = require("../middlewares");
 const me = express();
 me.get("/me", requiresAuth(), adminLogin, async (req, res, next) => {
-    console.log('req.oidc.user', req.oidc.user)
     try {
         const resp = await axios.get(`${authConfig.audience}users/${req.oidc.user.sub}`,
             {
@@ -17,7 +16,6 @@ me.get("/me", requiresAuth(), adminLogin, async (req, res, next) => {
         )
         res.send(resp.data)
     } catch (err) {
-        console.log('err', err)
         res.send(`error: ${err.message}`)
     }
 })

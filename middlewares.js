@@ -1,8 +1,7 @@
 const axios = require("axios");
-const authConfig = require("./secret/management_config.json");
+const managementConfig = require("./secret/management_config.json");
 const bodyParser = require('body-parser')
-const adminTokenURL = 'https://dev-btzqcfy7fq2uv7xm.jp.auth0.com/oauth/token'
-const {requiresAuth} = require("./repositories/auth0");
+const {requiresAuth, adminTokenURL} = require("./repositories/auth0");
 const {defaultHeaders} = require("./constants");
 
 let adminToken
@@ -13,7 +12,10 @@ function adminLogin (req, res, next) {
         return
     }
     axios.post(adminTokenURL,
-        JSON.stringify(authConfig),
+        JSON.stringify({
+            ...managementConfig,
+            "grant_type": "client_credentials",
+        }),
         {headers: defaultHeaders},
     ).then(function (resp) {
         adminToken = `Bearer ${resp.data.access_token}`

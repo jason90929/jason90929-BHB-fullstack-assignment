@@ -1,11 +1,11 @@
 const express = require("express");
 const axios = require("axios")
-const authConfig = require("../secret/management_config.json")
+const managementConfig = require("../secret/management_config.json")
 const {defaultHeaders} = require("../constants");
 const {adminLogin} = require("../middlewares");
 const users = express();
 users.get("/users", adminLogin, (req, res, next) => {
-    axios.get(`${authConfig.audience}users`,
+    axios.get(`${managementConfig.audience}users`,
         {
             headers: {
                 ...defaultHeaders,

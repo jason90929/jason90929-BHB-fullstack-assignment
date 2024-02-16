@@ -14,10 +14,13 @@ const config = {
     issuerBaseURL: 'https://dev-btzqcfy7fq2uv7xm.jp.auth0.com',
 };
 
+const adminTokenURL = `${config.issuerBaseURL}/oauth/token`
+
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 auth0.use(auth(config));
 
 module.exports = {
     auth0,
+    adminTokenURL,
     requiresAuth,
 }

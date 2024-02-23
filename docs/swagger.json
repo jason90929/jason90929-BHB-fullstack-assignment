@@ -1,0 +1,147 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User API",
+    "description": "Simple RESTful API in Node.js with TypeScript",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "get": {
+        "summary": "Redirect to Auth0 webpage to authenticate",
+        "description": "Retrieve appSession token in cookie",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "summary": "Call logout to clear login session automatically",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "summary": "Update the specific user.",
+        "description": "Update the specific user.",
+        "responses": {
+          "200": {
+            "description": "A JSON user names",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "properties": {
+          "created_at": {
+            "description": "RFC3339 format date time string",
+            "type": "string",
+            "example": "2024-02-16T09:43:34.404Z"
+          },
+          "email": {
+            "description": "User registered email",
+            "type": "string",
+            "example": "aa@gmail.com"
+          },
+          "email_verified": {
+            "description": "Has user's provided email passed verification",
+            "type": "boolean",
+            "example": false
+          },
+          "identities": {
+            "description": "Has user's provided email passed verification",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Identities"
+            }
+          },
+          "name": {
+            "type": "string",
+            "example": "tsaistorm"
+          },
+          "nickname": {
+            "type": "string",
+            "example": "tsaistorm"
+          },
+          "picture": {
+            "type": "string",
+            "example": "https://s.gravatar.com/avatar/b6fd32146acff6c9464478baa1f7ffd0?s=480&r=pg&d=https%3A%2F%2Fcdn.auth0.com%2Favatars%2Fts.png"
+          },
+          "updated_at": {
+            "type": "string",
+            "example": "2024-02-23T14:52:10.892Z"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "auth0|65cf2e46cc13b3c942a1b650"
+          },
+          "username": {
+            "type": "string",
+            "example": "jasontseng"
+          },
+          "last_password_reset": {
+            "type": "string",
+            "example": "2024-02-23T12:36:41.498Z"
+          },
+          "last_ip": {
+            "type": "string",
+            "example": "114.37.157.243"
+          },
+          "last_login": {
+            "type": "string",
+            "example": "2024-02-23T14:52:10.892Z"
+          },
+          "logins_count": {
+            "type": "integer",
+            "example": 21
+          }
+        },
+        "required": ["user_id", "username", "email"]
+      },
+      "Identities": {
+        "properties": {
+          "connection": {
+            "type": "string",
+            "example": "Username-Password-Authentication"
+          },
+          "provider": {
+            "type": "string",
+            "example": "auth0"
+          },
+          "user_id": {
+            "type": "string",
+            "example": "65cf2e46cc13b3c942a1b650"
+          },
+          "isSocial": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "required": ["user_id"]
+      }
+    }
+  }
+}

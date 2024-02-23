@@ -15,9 +15,14 @@ interface OIDC {
   oidc: {
     user: {
       email: string,
-      sub: string;
-    };
-  };
+      sub: string,
+    },
+  },
+  body: {
+    oldPassword: string,
+    newPassword: string,
+    confirmPassword: string,
+  }
 }
 auth.post(
   '/update-password',

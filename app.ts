@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const auth = require('./services/auth');
 const users = require('./services/users');
 const me = require('./services/me');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./docs/swagger.json');
 
 const app = express();
 app.use(morgan('dev'));
@@ -26,5 +28,7 @@ app.get('/healthcheck', (req, res) => {
   //     : res.send(null);
   res.sendStatus(200);
 });
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = app;

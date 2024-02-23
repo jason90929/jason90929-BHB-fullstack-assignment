@@ -20,7 +20,7 @@ users.get('/users', adminLogin, (req: Request, res: Response) => {
     })
     .catch((err: AxiosError) => {
       console.log('get users failed', err);
-      res.send(`error: ${err.message}`);
+      res.status(500).send(`error: ${err.message}`);
     });
 });
 

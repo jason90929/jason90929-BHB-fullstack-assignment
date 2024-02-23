@@ -30,7 +30,7 @@ me.get('/me', requiresAuth(), adminLogin, (req: Request, res: Response) => {
     })
     .catch((err: AxiosError) => {
       console.log('get user failed', err);
-      res.send(`error: ${err.message}`);
+      res.status(500).send(`error: ${err.message}`);
     });
 });
 
@@ -61,7 +61,7 @@ me.patch(
       })
       .catch((err: AxiosError) => {
         console.log('patch user failed', err);
-        res.send(`error: ${err.message}`);
+        res.status(500).send(`error: ${err.message}`);
       });
   }
 );
@@ -95,7 +95,7 @@ me.post(
       })
       .catch((err: AxiosError) => {
         console.log('patch user failed', err);
-        res.send(`error: ${err.message}`);
+        res.status(500).send(`error: ${err.message}`);
       });
   }
 );

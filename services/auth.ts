@@ -1,6 +1,6 @@
 import express = require('express');
 import {Request, Response} from 'express-serve-static-core';
-import {AxiosError, AxiosResponse} from 'axios';
+import {AxiosError} from 'axios';
 import {URLSearchParams} from 'url';
 const {auth0, adminTokenURL} = require('../repositories/auth0');
 const axios = require('axios');
@@ -14,15 +14,15 @@ auth.use(auth0);
 interface OIDC {
   oidc: {
     user: {
-      email: string,
-      sub: string,
-    },
-  },
+      email: string;
+      sub: string;
+    };
+  };
   body: {
-    oldPassword: string,
-    newPassword: string,
-    confirmPassword: string,
-  }
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+  };
 }
 auth.post(
   '/update-password',
@@ -32,11 +32,13 @@ auth.post(
   async (req: Request, res: Response) => {
     const newReq: Request & OIDC = Object.assign(req);
 
-    if (newReq.body.newPassword !== undefined &&
-      newReq.body.newPassword !== "" &&
-      newReq.body.newPassword !== newReq.body.confirmPassword) {
-      res.status(400).send("new password and confirm password not match")
-      return
+    if (
+      newReq.body.newPassword !== undefined &&
+      newReq.body.newPassword !== '' &&
+      newReq.body.newPassword !== newReq.body.confirmPassword
+    ) {
+      res.status(400).send('new password and confirm password not match');
+      return;
     }
 
     try {
@@ -56,30 +58,31 @@ auth.post(
           },
         }
       );
-    } catch(err: any) {
+    } catch (err) {
       console.log('check password failed', err);
-      res.status(400).send("Old password not match or try too many times")
-      return
+      res.status(400).send('Old password not match or try too many times');
+      return;
     }
-    axios.patch(
-      `${managementConfig.audience}users/${newReq.oidc.user.sub}`,
-      {
-        password: newReq.body.newPassword,
-      },
-      {
-        headers: {
-          ...defaultHeaders,
-          Authorization: newReq.headers.authorization,
+    axios
+      .patch(
+        `${managementConfig.audience}users/${newReq.oidc.user.sub}`,
+        {
+          password: newReq.body.newPassword,
         },
-      }
-    )
-    .then((resp: AxiosResponse) => {
-      res.send("password updated")
-    })
-    .catch((err: AxiosError) => {
-      console.log('update password failed', err);
-      res.status(500).send(`error: ${err.message}`);
-    });
+        {
+          headers: {
+            ...defaultHeaders,
+            Authorization: newReq.headers.authorization,
+          },
+        }
+      )
+      .then(() => {
+        res.send('password updated');
+      })
+      .catch((err: AxiosError) => {
+        console.log('update password failed', err);
+        res.status(500).send(`error: ${err.message}`);
+      });
   }
 );
 

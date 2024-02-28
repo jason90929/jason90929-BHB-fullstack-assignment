@@ -4,7 +4,7 @@ import {AxiosError} from 'axios';
 import {URLSearchParams} from 'url';
 const {auth0, adminTokenURL} = require('../repositories/auth0');
 const axios = require('axios');
-const managementConfig = require('../secret/management_config.json');
+const managementConfig = require('../../secret/management_config.json');
 const {requiresAuth, jsonParser, adminLogin} = require('../middlewares');
 const {defaultHeaders} = require('../constants');
 const auth = express();

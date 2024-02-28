@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express-serve-static-core';
 import {AxiosResponse} from 'axios';
 const axios = require('axios');
-const managementConfig = require('./secret/management_config.json');
+const managementConfig = require('../secret/management_config.json');
 import bodyParser = require('body-parser');
 const {requiresAuth, adminTokenURL} = require('./repositories/auth0');
 const {defaultHeaders} = require('./constants');

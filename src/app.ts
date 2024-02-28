@@ -1,14 +1,12 @@
 import express = require('express');
-import morgan = require('morgan');
 const helmet = require('helmet');
 const auth = require('./services/auth');
 const users = require('./services/users');
 const me = require('./services/me');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./docs/swagger.json');
+const swaggerDocument = require('../docs/swagger.json');
 
 const app = express();
-app.use(morgan('dev'));
 app.use(helmet());
 
 app.use(auth);
@@ -23,12 +21,11 @@ app.get('/', (req, res) => {
   res.send('hello');
 });
 app.get('/healthcheck', (req, res) => {
-  // req.oidc.isAuthenticated()
-  //     ? res.redirect('/profile')
-  //     : res.send(null);
   res.sendStatus(200);
 });
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
 
 module.exports = app;

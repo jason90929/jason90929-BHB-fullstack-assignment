@@ -2,6 +2,6 @@
   "watch": ["*.ts"],
   "ext": "ts,json",
   "ignore": ["**/*.spec.ts"],
-  "exec": "ts-node bin/www",
+  "exec": "ts-node ./src/app.ts",
   "verbose": true
 }

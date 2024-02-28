@@ -3,7 +3,7 @@ import express = require('express');
 import {AxiosError, AxiosResponse} from 'axios';
 
 const axios = require('axios');
-const managementConfig = require('../secret/management_config.json');
+const managementConfig = require('../../secret/management_config.json');
 const {defaultHeaders} = require('../constants');
 const {jsonParser, requiresAuth, adminLogin} = require('../middlewares');
 const me = express();

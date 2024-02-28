@@ -1,6 +1,6 @@
 const express = require('express');
 const {auth, requiresAuth} = require('express-openid-connect');
-const authConfig = require('../secret/auth_config.json');
+const authConfig = require('../../secret/auth_config.json');
 
 const auth0 = express();
 

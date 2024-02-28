@@ -4,4 +4,4 @@ node_modules/
 .idea/
 secret/
 docker-data/
-dist/
+build/

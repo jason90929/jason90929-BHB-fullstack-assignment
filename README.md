@@ -1,34 +1,41 @@
-# Preparation
+# Introduction
 
-## Install MySQL via Docker
+## Start project locally
 
-- To start this project correctly, you need to install MySQL via using the command below:
+To start this project locally, you need to execute `npm install` in Terminal first, 
+and additionally install global packages e.g. `npm i -g typescript ts-node nodemon`  
+then execute `npm run dev` to start 
 
-```
-docker run -d --restart always \
-  --name mysql \
-  -e MYSQL_ROOT_PASSWORD=root \
-  -e MYSQL_DATABASE=mydb \
-  -e MYSQL_USER=app \
-  -e MYSQL_PASSWORD=apppass \
-  -v $(pwd)/docker-data/mysql:/var/lib/mysql \
-  -p 3306:3306 \
-  mysql:8.3.0
-```
+## Build image via Docker
 
-You can start/stop after initialized the container
+In this project, after deploy all requirement services to AWS by using Terraform
+Then we can start build docker to make this project production-ready
 
-`docker start mysql`
-`docker stop mysql`
+Step 1, need to login AWS
 
-### Install mycli via Homebrew
+`aws ecr get-login-password --region ap-northeast-1 | docker login \
+--username AWS --password-stdin 306698408315.dkr.ecr.ap-northeast-1.amazonaws.com `
 
-`brew install mycli`
+Step 2, execute deploy to AWS
 
-After installed, you can execute command to start mysql, check status or stop it.
+`cd terraform`
+`terraform apply`
 
-After started MySQL, you can manipulate it by using mycli
+Step 3, upload image to ECR
 
-`mycli -u root -h localhost`
+`docker build -t aha-service .`
+`docker tag aha-service:latest 306698408315.dkr.ap-northeast-1.amazonaws.com/aha-service:latest`
+`docker push 306698408315.dkr.ap-northeast-1.amazonaws.com/aha-service:latest`
 
-Password is "root" that been set above step
+Then wait and see the result 
+
+### Destroy all deployed stuff
+
+In order to not be charged by AWS every day, we need to stop machine online
+
+Step 1, open AWS ECR and delete all deployed images manually, then:
+
+Step 2, terminate and delete all deployed services on AWS
+
+`cd terraform`
+`terraform destroy`
